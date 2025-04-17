@@ -1,7 +1,7 @@
 import React from 'react';
-import SectionTitle from '../../../components/sectionTitle/SectionTitle';
-import featuredImg from '../../../assets/home/featured.jpg'
-import './Featured.css'
+import featuredImg from '../../../assets/home/featured.jpg';
+import SectionTitle from '../../../components/SectionTitle/SectionTitle';
+import './Featured.css';
 
 const Featured = () => {
     return (

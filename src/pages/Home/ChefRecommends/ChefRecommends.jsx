@@ -1,6 +1,6 @@
 import React from "react";
-import SectionTitle from "../../../components/sectionTitle/SectionTitle";
 import salad from "../../../assets/home/slide1.jpg";
+import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 
 const ChefRecommends = () => {
   return (
