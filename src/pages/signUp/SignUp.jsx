@@ -4,14 +4,27 @@ import signupData from '../../assets/register.json'
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Providers/Authprovider";
+import { Helmet } from "react-helmet-async";
 
 
 const SignUp = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    const onSubmit = data => {
+      console.log(data);
+      createUser(data.email, data.password)
+          .then(result => {
+              const loggedUser = result.user;
+              console.log(loggedUser);
+          })
+          }  
   return (
     <>
+    <Helmet>
+      <title>FlavorHub | signUp</title>
+    </Helmet>
       <div className="hero bg-base-200 min-h-screen">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left w-96">
@@ -59,7 +72,12 @@ const SignUp = () => {
                 </label>
                 <input
                   type="password"
-                  {...register("password", { required: true })}
+                  {...register("password", {
+                    required: true,
+                    minLength: 6,
+                    maxLength: 20,
+                    pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
+                })}
                   name="password"
                   placeholder="your password"
                   className="input input-bordered"
