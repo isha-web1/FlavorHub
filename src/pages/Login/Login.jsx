@@ -1,13 +1,15 @@
-import {  useEffect, useRef, useState } from 'react';
+import {  useContext, useEffect, useRef, useState } from 'react';
 import { Helmet } from "react-helmet-async";
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginData from "../../assets/login.json";
 import Lottie from "lottie-react";
+import { AuthContext } from '../../Providers/Authprovider';
 
 const Login = () => {
     const captchaRef = useRef(null)
   const [disabled, setDisabled] = useState(true);
+  const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -94,6 +96,7 @@ const Login = () => {
                 <button disabled={disabled} className="btn btn-primary">Login</button>
               </div>
             </form>
+            <p className='p-4'><small className='underline text-blue-500'>New Here? <Link to="/signup">Create an account</Link> </small></p>
           </div>
         </div>
       </div>
