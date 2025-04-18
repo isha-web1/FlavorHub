@@ -1,13 +1,14 @@
-import {  useContext, useEffect, useRef, useState } from 'react';
+import {  useContext, useEffect,  useState } from 'react';
 import { Helmet } from "react-helmet-async";
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginData from "../../assets/login.json";
 import Lottie from "lottie-react";
 import { AuthContext } from '../../Providers/Authprovider';
+import Swal from 'sweetalert2';
 
 const Login = () => {
-    const captchaRef = useRef(null)
+    
   const [disabled, setDisabled] = useState(true);
   const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -24,6 +25,21 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
+    signIn(email, password)
+    .then(result => {
+        const user = result.user;
+        console.log(user);
+        Swal.fire({
+            title: 'User Login Successful.',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        });
+        navigate(from, { replace: true });
+    })
   }
 
   const handleValidateCaptcha = (e) => {
@@ -83,14 +99,14 @@ const Login = () => {
                 </label>
                 <input
                   type="text"
-                  ref={captchaRef}
+                  
                   name="captcha"
                   placeholder="write the text above"
                   className="input input-bordered"
                   required
                   onBlur={handleValidateCaptcha}
                 />
-                <button  className='btn btn-outline btn-xs my-1'>validate captcha</button>
+                {/* <button  className='btn btn-outline btn-xs my-1'>validate captcha</button> */}
               </div>
               <div className="form-control mt-6">
                 <button disabled={disabled} className="btn btn-primary">Login</button>
