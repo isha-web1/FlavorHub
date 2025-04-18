@@ -6,6 +6,7 @@ import loginData from "../../assets/login.json";
 import Lottie from "lottie-react";
 import { AuthContext } from '../../Providers/Authprovider';
 import Swal from 'sweetalert2';
+const from = location.state?.from?.pathname || "/"; 
 
 const Login = () => {
     
@@ -29,6 +30,7 @@ const Login = () => {
     .then(result => {
         const user = result.user;
         console.log(user);
+        navigate(from, { replace: true });
         Swal.fire({
             title: 'User Login Successful.',
             showClass: {
@@ -38,7 +40,7 @@ const Login = () => {
                 popup: 'animate__animated animate__fadeOutUp'
             }
         });
-        navigate(from, { replace: true });
+       
     })
   }
 
