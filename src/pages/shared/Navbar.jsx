@@ -35,7 +35,7 @@ const Navbar = () => {
             </>
         }
       <li>
-        <Link to="/dashboard/mycart">
+        <Link to="/dashboard">
           <button className="btn gap-2 btn-outline hover:bg-yellow-200">
             <FaShoppingCart></FaShoppingCart>
              <div className="badge badge-secondary btn-outline">+{cart.length}</div> 
