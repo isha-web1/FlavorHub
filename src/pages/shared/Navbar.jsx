@@ -3,9 +3,11 @@ import { FaShoppingCart } from "react-icons/fa";
 import logo from '../../../public/logo.png'
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/Authprovider";
+import useCart from "../../Hooks/useCart";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [cart] = useCart();
 
   const handleLogOut = () => {
     logOut()
@@ -36,7 +38,7 @@ const Navbar = () => {
         <Link to="/dashboard/mycart">
           <button className="btn gap-2 btn-outline hover:bg-yellow-200">
             <FaShoppingCart></FaShoppingCart>
-             <div className="badge badge-secondary btn-outline">+0</div> 
+             <div className="badge badge-secondary btn-outline">+{cart.length}</div> 
           </button>
         </Link>
       </li>
