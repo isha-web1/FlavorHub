@@ -6,6 +6,7 @@ import loginData from "../../assets/login.json";
 import Lottie from "lottie-react";
 import { AuthContext } from '../../Providers/Authprovider';
 import Swal from 'sweetalert2';
+import SocialLogin from '../../components/SocialLogin';
 const from = location.state?.from?.pathname || "/"; 
 
 const Login = () => {
@@ -114,6 +115,7 @@ const Login = () => {
                 <button disabled={disabled} className="btn btn-primary">Login</button>
               </div>
             </form>
+            <SocialLogin></SocialLogin>
             <p className='p-4'><small className='underline text-blue-500'>New Here? <Link to="/signup">Create an account</Link> </small></p>
           </div>
         </div>

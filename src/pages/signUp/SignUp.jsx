@@ -6,36 +6,49 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Providers/Authprovider";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import SocialLogin from "../../components/SocialLogin";
 
 
 const SignUp = () => {
+  const axiosPublic = useAxiosPublic();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const onSubmit = data => {
-      console.log(data);
       createUser(data.email, data.password)
           .then(result => {
               const loggedUser = result.user;
               console.log(loggedUser);
               updateUserProfile(data.name, data.photoURL)
                   .then(() => {
-                      console.log('user profile info updated')
-                      reset();
-                      Swal.fire({
-                          position: 'top-end',
-                          icon: 'success',
-                          title: 'User created successfully.',
-                          showConfirmButton: false,
-                          timer: 1500
-                      });
-                      navigate('/');
+                      // create user entry in the database
+                      const userInfo = {
+                          name: data.name,
+                          email: data.email
+                      }
+                      axiosPublic.post('/users', userInfo)
+                          .then(res => {
+                              if (res.data.insertedId) {
+                                  console.log('user added to the database')
+                                  reset();
+                                  Swal.fire({
+                                      position: 'top-end',
+                                      icon: 'success',
+                                      title: 'User created successfully.',
+                                      showConfirmButton: false,
+                                      timer: 1500
+                                  });
+                                  navigate('/');
+                              }
+                          })
+
 
                   })
                   .catch(error => console.log(error))
           })
-  }; 
+  };
   return (
     <>
     <Helmet>
@@ -123,6 +136,7 @@ const SignUp = () => {
                 </button>
               </div>
             </form>
+            <SocialLogin></SocialLogin>
             <p className="p-4">
               <small className="underline text-blue-500">
                 All ready have account? <Link to="/login">please login</Link>{" "}
