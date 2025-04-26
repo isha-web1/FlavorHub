@@ -5,31 +5,22 @@ import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
+
 const AllUsers = () => {
   const [axiosSecure] = useAxiosSecure();
-
-  const {
-    data: users = [],
-    refetch,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      try {
-        const res = await axiosSecure.get("/users");
-        console.log("Fetched users:", res.data); // Debugging
-        return res.data;
-      } catch (err) {
-        console.error("Error fetching users:", err); // Debugging
-        throw err; // Ensure error is propagated
+  
+  const { data: users = [], refetch } = useQuery({
+      queryKey: ['users'],
+      queryFn: async () => {
+          const res = await axiosSecure.get('/users');
+          return res.data;
       }
-    },
-  });
+  })
+  
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error.message}</p>;
+  
+
+  
 
   const handleMakeAdmin = (user) => {
     axiosSecure.patch(`/users/admin/${user._id}`).then((res) => {
