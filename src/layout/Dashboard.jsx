@@ -23,14 +23,12 @@ const Dashboard = () => {
   if (isAdminLoading) {
     // Show a loading spinner or placeholder
     return <div>Loading...</div>;
-}
+  }
 
-if (isError) {
+  if (isError) {
     // Handle error (optional)
     return <div>Error loading admin status.</div>;
-}
-
-
+  }
 
   return (
     <div className="flex">
